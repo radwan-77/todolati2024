@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todolati2024/providers/dark_mode_provider.dart';
 import 'package:todolati2024/providers/tasks_provider.dart';
 import 'package:todolati2024/screens/home_screen.dart';
 
@@ -16,18 +17,36 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<TasksProvider>(
-            create: (context) => TasksProvider())
+            create: (context) => TasksProvider()..getTasks()),
+        ChangeNotifierProvider<DarkModeProvider>(
+            create: (context) => DarkModeProvider()..getMode())
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          textTheme: GoogleFonts.cairoTextTheme(),
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-          useMaterial3: false,
-        ),
-        home: const HomeScreen(),
-      ),
+      child:
+          Consumer<DarkModeProvider>(builder: (context, darkModeConsumer, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            dividerTheme: DividerThemeData(
+              color: darkModeConsumer.isDark ? Colors.white24 : Colors.black26,
+            ),
+            tabBarTheme: TabBarTheme(
+                labelColor:
+                    darkModeConsumer.isDark ? Colors.white : Colors.blueGrey),
+            appBarTheme: const AppBarTheme(
+                centerTitle: true, backgroundColor: Colors.blue),
+            drawerTheme: DrawerThemeData(
+                backgroundColor:
+                    darkModeConsumer.isDark ? Colors.black : Colors.white),
+            scaffoldBackgroundColor:
+                darkModeConsumer.isDark ? Colors.black : Colors.white,
+            textTheme: GoogleFonts.cairoTextTheme(),
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+            useMaterial3: false,
+          ),
+          home: const HomeScreen(),
+        );
+      }),
     );
   }
 }
