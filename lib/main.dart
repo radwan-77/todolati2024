@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todolati2024/providers/dark_mode_provider.dart';
@@ -24,8 +25,17 @@ class MyApp extends StatelessWidget {
       child:
           Consumer<DarkModeProvider>(builder: (context, darkModeConsumer, _) {
         return MaterialApp(
+          title: 'Localizations Sample App',
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            Locale('en'), // English
+            Locale('es'), // Spanish
+          ],
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
           theme: ThemeData(
             dividerTheme: DividerThemeData(
               color: darkModeConsumer.isDark ? Colors.white24 : Colors.black26,
