@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todolati2024/providers/dark_mode_provider.dart';
 import 'package:todolati2024/providers/tasks_provider.dart';
 import 'package:todolati2024/screens/home_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,14 +28,18 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Localizations Sample App',
           localizationsDelegates: [
+            AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: [
-            Locale('en'), // English
             Locale('es'), // Spanish
+            Locale("ar"), //arabic
+            Locale('en'), // English
           ],
+          locale:
+              Locale('en'), // Default locale (You will change it dynamically)
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             dividerTheme: DividerThemeData(
